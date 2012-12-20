@@ -25,14 +25,12 @@ You can also get one row at a time:
     }
 
 You can also use prepared statements:
+    
+    $sql = "SELECT * FROM user WHERE id = :id";
+    $user = Db::prepare($sql)->bindParam('id', $_GET['id'])->execute()->one();
 
-    $user = Db::prepare("SELECT * FROM user WHERE id = :id")
-        ->bindParam('id', $_GET['id'])->execute()->one();
-
-    $user = Db::prepare("SELECT * FROM user WHERE id > :id")
-        ->execute( array(
-            'id' => $_GET['id']
-        ) )->all();
+    $sql = "SELECT * FROM user WHERE id > :id";
+    $user = Db::prepare($sql)->execute(  array('id' => $_GET['id'])  )->all();
 
 It uses PDO's prepare methods in the background so you don't have to worry about sanitizing input.
 
